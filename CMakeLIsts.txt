@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.28.3)
+project(dywoqos CXX)
+
+# Build toolchain first
+add_subdirectory(toolchain)
+
+add_subdirectory(dywoqos_kernel)
