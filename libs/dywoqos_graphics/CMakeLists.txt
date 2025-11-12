@@ -28,3 +28,22 @@ add_test(NAME DywoqosGraphics_Drawing COMMAND my_tests)
 set_tests_properties(DywoqosGraphics_Drawing PROPERTIES
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/tests
 )
+
+# Install rules
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}Targets
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+    INCLUDES DESTINATION include
+)
+
+# Install headers
+install(DIRECTORY include/ DESTINATION include)
+
+# Install CMake config files for find_package
+install(EXPORT ${PROJECT_NAME}Targets
+    FILE ${PROJECT_NAME}Targets.cmake
+    NAMESPACE ${PROJECT_NAME}::
+    DESTINATION lib/cmake/${PROJECT_NAME}
+)
