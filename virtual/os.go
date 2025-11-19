@@ -1,5 +1,6 @@
 package virtual
 
+// Mode represents the mode of [Os].
 type Mode string
 
 // Os represents the virtual operating system.
