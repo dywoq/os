@@ -20,7 +20,7 @@ type Os interface {
 	//
 	// All interruptions gate you may find
 	// on your official OS documentation you use.
-	Interruption() (any, error)
+	Interruption(gate uintptr, args []any) (any, error)
 }
 
 const (
