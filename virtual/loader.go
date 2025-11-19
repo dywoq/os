@@ -8,5 +8,5 @@ type Loader interface {
 	//
 	// All interruptions gate you can see on the virtual loaders'
 	// documentation.
-	Interrupt(os Os, gate uintptr, args []any) (any, error)
+	Interrupt(gate uintptr, args []any) (any, error)
 }
