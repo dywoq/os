@@ -13,14 +13,14 @@ type Os interface {
 	//
 	// All system calls table you may find
 	// on your official OS documentation you use.
-	Syscall(id uintptr, args []any) (any, error)
+	Syscall(id uintptr, args ...any) (any, error)
 
 	// Interruption causes a interruption,
 	// with the set gate and provided arguments.
 	//
-	// All interruptions gate you may find
+	// All interruptions gates you may find
 	// on your official OS documentation you use.
-	Interruption(gate uintptr, args []any) (any, error)
+	Interruption(gate uintptr, args ...any) (any, error)
 }
 
 const (
