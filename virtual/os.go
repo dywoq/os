@@ -22,6 +22,13 @@ type Os interface {
 	// All interruptions gates you may find
 	// on your official OS documentation you use.
 	Interruption(gate uintptr, args ...any) (any, error)
+
+	// Startup starts the OS in the user mode,
+	// with the provided data got from the gathering mode.
+	//
+	// You should use it after you initialized everything
+	// required.
+	Startup(data map[string]any) error
 }
 
 const (
