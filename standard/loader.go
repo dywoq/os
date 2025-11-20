@@ -15,7 +15,7 @@ package standard
 type LoaderInterruptions interface {
 	LoaderLeaver
 	LoaderPrinter
-	LoaderRam
+	LoaderMemory
 }
 
 type LoaderLeaver interface {
@@ -35,7 +35,7 @@ type LoaderPrinter interface {
 	Print(string) error
 }
 
-type LoaderRam interface {
+type LoaderMemory interface {
 	// Ram returns the available RAM.
 	//
 	// Its gate and signature:
