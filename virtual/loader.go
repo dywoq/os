@@ -4,9 +4,9 @@ package virtual
 // and helps initialize it.
 type Loader interface {
 	// Interrupt causes a interruption to the loader.
-	// Returns an error if the current mode is not Gathering mode.
+	// Must return an error if the current mode is not Gathering mode.
 	//
 	// All interruptions gate you can see on the virtual loaders'
 	// documentation.
-	Interrupt(gate uintptr, args []any) (any, error)
+	Interrupt(o Os, gate uintptr, args ...any) (any, error)
 }

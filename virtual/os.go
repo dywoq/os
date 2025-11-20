@@ -9,6 +9,11 @@ type Os interface {
 	// Os is in.
 	Mode() Mode
 
+	// Enter enters the new mode.
+	// It should move only forward, not backwards:
+	// if the current mode is set to init mode, OS can't return to gathering mode.
+	Enter(m Mode) error
+
 	// Syscall creates a system call, with the unique Id
 	// and provided arguments.
 	//
