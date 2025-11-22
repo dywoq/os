@@ -24,6 +24,7 @@ BraceWrapping:
   SplitEmptyNamespace: false
 
 FixNamespaceComments: true
+NamespaceIndentation: All
 ReflowComments: Always
 
 AlignConsecutiveAssignments:
