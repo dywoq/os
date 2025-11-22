@@ -53,6 +53,7 @@ get_framebuffer(EFI_SYSTEM_TABLE *st, boot_info_t *info)
 //  Makes an attempt to get ACPI RSDP and store it into the system table.
 //  The function tries to find ACPI 2.0 first, if it fails to do, fallbacks to ACPI 1.0.
 //  After all failed attempts, the function outputs an warning.
+//
 void
 get_rsdp(EFI_SYSTEM_TABLE *st, boot_info_t *info)
 {
@@ -92,6 +93,7 @@ get_rsdp(EFI_SYSTEM_TABLE *st, boot_info_t *info)
 //  The got memory map stored in info.
 //
 //  May fail if it fails to allocate pool, get memory map, or exit boot services.
+//
 EFI_STATUS
 get_memory_map_and_exit(EFI_SYSTEM_TABLE *st, EFI_HANDLE image_handle, boot_info_t *info)
 {
@@ -130,5 +132,46 @@ get_memory_map_and_exit(EFI_SYSTEM_TABLE *st, EFI_HANDLE image_handle, boot_info
         return status;
     }
 
+    return EFI_SUCCESS;
+}
+
+//
+// Abstract:
+//  A entry to load the kernel start point.
+//  The function does these tasks:
+//  - Get framebuffer;
+//  - Get RSDP;
+//  - Get memory map;
+//  - Exit.
+//
+//  If these steps were successfully done, the function passes the boot info
+//  to the kernel and runs it.
+//
+EFI_STATUS
+efi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *st)
+{
+    EFI_STATUS  status;
+    boot_info_t info = {0};
+
+    InitializeLib(image_handle, st);
+
+    Print(L"uefi bootloader starting\n");
+
+    status = get_framebuffer(st, &info);
+    if (EFI_ERROR(status))
+    {
+        Print("WARNING: no graphics output available\n");
+    }
+
+    get_rsdp(st, &info);
+
+    extern void kernel_entry(boot_info_t * info);
+
+    status = get_memory_map_and_exit(st, image_handle, &info);
+    if (EFI_ERROR(status))
+    {
+        return status;
+    }
+    kernel_entry(&info);
     return EFI_SUCCESS;
 }
