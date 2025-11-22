@@ -34,10 +34,10 @@ extern "C"
 
     typedef struct boot_memory
     {
-        void              *map;
-        unsigned long long map_size;
-        unsigned long long descriptor_size;
-        unsigned int       map_version;
+        void         *map;
+        unsigned long map_size;
+        unsigned long descriptor_size;
+        unsigned int  map_version;
     } boot_memory_t;
 
     typedef struct boot_info

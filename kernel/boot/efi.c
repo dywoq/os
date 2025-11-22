@@ -85,3 +85,50 @@ get_rsdp(EFI_SYSTEM_TABLE *st, boot_info_t *info)
 
     Print(L"WARNING: ACPI RSDP not found.\n");
 }
+
+// Abstract:
+//
+//  Makes an attempt to get the memory map, and exit the boot services.
+//  The got memory map stored in info.
+//
+//  May fail if it fails to allocate pool, get memory map, or exit boot services.
+EFI_STATUS
+get_memory_map_and_exit(EFI_SYSTEM_TABLE *st, EFI_HANDLE image_handle, boot_info_t *info)
+{
+    EFI_STATUS status;
+    UINTN      map_key;
+
+    info->memory->map_size = 0;
+    status                 = st->BootServices->GetMemoryMap(
+        &info->memory->map_size, NULL, &map_key, &info->memory->descriptor_size, &info->memory->map_version);
+
+    info->memory->map_size += 2 * info->memory->descriptor_size;
+    status = st->BootServices->AllocatePool(EfiLoaderData, info->memory->map_size, &info->memory->map);
+
+    if (EFI_ERROR(status))
+    {
+        Print(L"failed to allocate memory map: %r\n", status);
+        return status;
+    }
+
+    status = st->BootServices->GetMemoryMap(
+        &info->memory->map_size, (EFI_MEMORY_DESCRIPTOR *)info->memory->map, &map_key, &info->memory->descriptor_size,
+        &info->memory->map_version);
+
+    if (EFI_ERROR(status))
+    {
+        Print(L"failed to get memory map: %r\n", status);
+        return status;
+    }
+
+    Print(L"memory map obtained, exiting boot services...\n");
+
+    status = st->BootServices->ExitBootServices(image_handle, map_key);
+    if (EFI_ERROR(status))
+    {
+        Print(L"failed to exit boot services: %r\n", status);
+        return status;
+    }
+
+    return EFI_SUCCESS;
+}
