@@ -46,3 +46,42 @@ get_framebuffer(EFI_SYSTEM_TABLE *st, boot_info_t *info)
 
     return EFI_SUCCESS;
 }
+
+//
+// Abstract:
+//
+//  Makes an attempt to get ACPI RSDP and store it into the system table.
+//  The function tries to find ACPI 2.0 first, if it fails to do, fallbacks to ACPI 1.0.
+//  After all failed attempts, the function outputs an warning.
+void
+get_rsdp(EFI_SYSTEM_TABLE *st, boot_info_t *info)
+{
+    EFI_GUID acpi2_guid = ACPI_20_TABLE_GUID;
+    EFI_GUID acpi1_guid = ACPI_TABLE_GUID;
+
+    info->rsdp          = NULL;
+
+    // Try ACPI 2.0 first
+    for (UINTN i = 0; i < ST->NumberOfTableEntries; i++)
+    {
+        if (CompareGuid(&ST->ConfigurationTable[i].VendorGuid, &acpi2_guid) == 0)
+        {
+            info->rsdp = ST->ConfigurationTable[i].VendorTable;
+            Print(L"Found ACPI 2.0 RSDP at 0x%lx\n", info->rsdp);
+            return;
+        }
+    }
+
+    // Fallback to ACPI 1.0
+    for (UINTN i = 0; i < ST->NumberOfTableEntries; i++)
+    {
+        if (CompareGuid(&ST->ConfigurationTable[i].VendorGuid, &acpi1_guid) == 0)
+        {
+            info->rsdp = ST->ConfigurationTable[i].VendorTable;
+            Print(L"Found ACPI 1.0 RSDP at 0x%lx\n", info->rsdp);
+            return;
+        }
+    }
+
+    Print(L"WARNING: ACPI RSDP not found.\n");
+}
