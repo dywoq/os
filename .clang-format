@@ -1,0 +1,36 @@
+BasedOnStyle: microsoft
+IndentWidth: 4
+
+Standard: Latest
+
+BreakAfterReturnType: All
+BreakAfterAttributes: Always
+AlignAfterOpenBracket: AlwaysBreak
+
+SortIncludes:
+  Enabled: true
+  IgnoreCase: false
+
+SortUsingDeclarations: LexicographicNumeric
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: 1
+
+BraceWrapping:
+  AfterNamespace: true
+  AfterFunction: true 
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+
+FixNamespaceComments: true
+ReflowComments: Always
+
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: true
+  AcrossComments: false
+
+
+AlignConsecutiveDeclarations:
+  Enabled: true
