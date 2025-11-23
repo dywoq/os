@@ -5,7 +5,8 @@ Standard: Latest
 
 BreakAfterReturnType: All
 BreakAfterAttributes: Always
-
+BreakBeforeTemplateCloser: true
+  
 AlignAfterOpenBracket: AlwaysBreak
 
 SortIncludes:
