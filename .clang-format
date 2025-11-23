@@ -27,6 +27,8 @@ FixNamespaceComments: true
 NamespaceIndentation: All
 ReflowComments: Always
 
+ColumnLimit: 90
+
 AlignConsecutiveAssignments:
   Enabled: true
   AcrossEmptyLines: true
