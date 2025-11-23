@@ -3,8 +3,7 @@
 // Functions wrappers around assembly instructions
 // for AARCH64 target.
 //
-#ifndef _DYWOQ_OS_KERNEL_ARCH_AARCH64_INSTRUCTIONS_H
-#define _DYWOQ_OS_KERNEL_ARCH_AARCH64_INSTRUCTIONS_H
+#pragma once
 
 namespace dywoq::os::kernel::arch::instructions
 {
@@ -33,4 +32,3 @@ namespace dywoq::os::kernel::arch::instructions
     }
 } // namespace dywoq::os::kernel::arch::instructions
 
-#endif

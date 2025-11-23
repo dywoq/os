@@ -2,8 +2,7 @@
 //
 // Aliases over types.
 //
-#ifndef _DYWOQ_OS_KERNEL_TYPES_H
-#define _DYWOQ_OS_KERNEL_TYPES_H
+#pragma once
 
 namespace dywoq::os::kernel
 {
@@ -19,5 +18,3 @@ namespace dywoq::os::kernel
 
     using uintptr_t = uint64_t;
 } // namespace dywoq::os::kernel
-
-#endif

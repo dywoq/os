@@ -3,8 +3,7 @@
 // Functions wrappers around assembly instructions
 // for x86_64 target.
 //
-#ifndef _DYWOQ_OS_KERNEL_ARCH_X86_64_INSTRUCTIONS_H
-#define _DYWOQ_OS_KERNEL_ARCH_X86_64_INSTRUCTIONS_H
+#pragma once
 
 namespace dywoq::os::kernel::arch::instructions
 {
@@ -32,5 +31,3 @@ namespace dywoq::os::kernel::arch::instructions
         __asm__ volatile("msr daifset, #2" : : :);
     }
 } // namespace dywoq::os::kernel::arch::instructions
-
-#endif
