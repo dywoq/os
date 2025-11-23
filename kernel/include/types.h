@@ -1,14 +1,7 @@
-/**
-    dywoq 2025 - Apache License 2.0
-
-    types.h
-
-    Abstract:
-       Aliases over types
-
-    Author:
-      dywoq - https://github.com/dywoq
-*/
+// dywoq 2025 - Apache License 2.0
+//
+// Aliases over types.
+//
 #ifndef _DYWOQ_OS_KERNEL_TYPES_H
 #define _DYWOQ_OS_KERNEL_TYPES_H
 
