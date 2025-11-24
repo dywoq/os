@@ -3,13 +3,13 @@
     dywoq 2025
 
     Module name:
-        docdef.h
+        defdoc.h
 
     Abstract:
         Definitions of macros, types etc. whose purpose for code is documentation-only
 
     Docs file:
-        docs/docdef.md
+        docs/defdoc.md
 **/
 #pragma once
 

@@ -3,13 +3,13 @@
     dywoq 2025
 
     Module name:
-        basedef.h
+        defbase.h
 
     Abstract:
         Base definitions of types used across the kernel.
 
     Docs file:
-        docs/basedef.md
+        docs/defbase.md
 **/
 #pragma once
 
@@ -22,6 +22,4 @@ typedef unsigned short     USHORT;
 typedef unsigned int       UINT;
 typedef unsigned long long ULONGLONG;
 typedef ULONGLONG UINTADDRESS;
-
-typedef const char    *ASCII_STR;
 

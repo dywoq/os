@@ -1,4 +1,4 @@
-# basedef.h 
+# defbase.h 
 
 Base definitions of types used across the kernel.
 
@@ -16,8 +16,3 @@ typedef unsigned long long ULONGLONG;
 typedef ULONGLONG          UINTPTR;
 ```
 
-# Types related to strings
-
-```c
-typedef const char    *ASCII_STR;
-```

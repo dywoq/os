@@ -1,4 +1,4 @@
-# docdef.h
+# defdoc.h
 
 Definitions of macros, types etc. whose purpose for code is documentation-only 
 
