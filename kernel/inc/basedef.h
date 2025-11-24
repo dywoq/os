@@ -21,7 +21,7 @@ typedef unsigned char      UCHAR;
 typedef unsigned short     USHORT;
 typedef unsigned int       UINT;
 typedef unsigned long long ULONGLONG;
-typedef ULONGLONG          UINTPTR;
+typedef ULONGLONG UINTADDRESS;
 
 typedef const char    *ASCII_STR;
 
