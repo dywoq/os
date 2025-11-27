@@ -1,14 +1,32 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+#![no_std]
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+use uefi::runtime::TimeParams;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
+/// Holds the last saved time, received from the bootloader.
+pub struct SnapshotTime(
+    pub u16,
+    pub u8,
+    pub u8,
+    pub u8,
+    pub u8,
+    pub u8,
+    pub u32,
+    pub Option<i16>,
+);
+
+impl SnapshotTime {
+    /// Creates a new [`SnapshotTime`] and stores its fields
+    /// with information received from the UEFI time params.
+    pub fn from_uefi(params: TimeParams) -> SnapshotTime {
+        SnapshotTime(
+            params.year,
+            params.month,
+            params.day,
+            params.hour,
+            params.minute,
+            params.second,
+            params.nanosecond,
+            params.time_zone,
+        )
     }
 }
