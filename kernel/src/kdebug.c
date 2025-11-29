@@ -1,5 +1,5 @@
-#include "../inc/kdebug.h"
-#include "../inc/kbuild.h"
+#include "../inc/kernel/debug.h"
+#include "../inc/kernel/build.h"
 
 void
 KeDebugAssert(IN BOOL condition, IN OPTIONAL KE_DEBUG_INFO *Info)

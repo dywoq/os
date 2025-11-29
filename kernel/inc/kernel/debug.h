@@ -2,7 +2,7 @@
  * dywoq 2025
  *
  * Header name:
- * 	kdebug.h
+ * 	kernel/debug.h
  *
  * Abstract:
  * 	Functionality related to the kernel debugging.
@@ -13,8 +13,8 @@
  */
 #pragma once
 
-#include "docdef.h"
-#include "basedef.h"
+#include "../def/doc.h"
+#include "../def/base.h"
 
 /**
  * Optional debugging information.

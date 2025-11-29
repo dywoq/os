@@ -2,7 +2,7 @@
  * dywoq 2025
  *
  * Header name:
- * 	docdef.h
+ * 	def/doc.h
  *
  * Abstract:
  * 	Definitions for documentation purpose

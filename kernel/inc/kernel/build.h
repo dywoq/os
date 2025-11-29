@@ -2,7 +2,7 @@
  * dywoq 2025
  *
  * Header name:
- * 	kbuild.h
+ * 	kernel/build.h
  *
  * Abstract:
  * 	Functionality to help you see the information of build 

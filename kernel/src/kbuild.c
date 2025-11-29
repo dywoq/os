@@ -1,4 +1,4 @@
-#include "../inc/kbuild.h"
+#include "../inc/kernel/build.h"
 
 KE_BUILD_TYPE
 KeGetBuildType()
