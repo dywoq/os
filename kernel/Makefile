@@ -1,6 +1,7 @@
-# CONFIG
+# Config
+
 C := gcc-13
-C_FLAGS := -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -ffreestanding -Wall -Wextra
+C_FLAGS := -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -ffreestanding -Wall -Wextra --std=c23
 
 BUILD_DIR := build
 OBJ_DIR := $(BUILD_DIR)/objs
@@ -9,6 +10,24 @@ SOURCES := $(wildcard src/*.c)
 OBJECTS := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
 
 TARGET := dywoqos.efi
+
+# Detect build type
+BUILD_TYPE ?= debug
+BUILD_TYPES_VALID := debug release
+
+ifeq ($(filter $(BUILD_TYPE),$(BUILD_TYPES_VALID)),)
+$(error Invalid BUILD_TYPE: $(BUILD_TYPE). Allowed: $(BUILD_TYPES_VALID))
+endif
+
+ifeq (BUILD_TYPE,debug) 
+C_FLAGS += -D -DBUILD_RELEASE=0
+C_FLAGS += -D -DBUILD_DEBUG=1
+endif
+
+ifeq (BUILD_TYPE,release) 
+C_FLAGS += -D -DBUILD_RELEASE=1
+C_FLAGS += -D -DBUILD_DEBUG=0
+endif
 
 # Default target
 all: $(BUILD_DIR)/$(TARGET)
