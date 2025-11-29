@@ -6,4 +6,6 @@
 void
 KeEntry()
 {
+    while (true)
+        ;
 }
