@@ -5,7 +5,7 @@
  * 	kernel/build.h
  *
  * Abstract:
- * 	Functionality to help you see the information of build 
+ * 	Functionality to help you see the information of build
  * 	more comfortable.
  *
  * Author:
@@ -13,9 +13,10 @@
  */
 #pragma once
 
-typedef enum _KE_BUILD_TYPE {
-	KE_BUILD_TYPE_DEBUG,
-	KE_BUILD_TYPE_RELEASE
+typedef enum _KE_BUILD_TYPE
+{
+    KE_BUILD_TYPE_DEBUG,
+    KE_BUILD_TYPE_RELEASE
 } KE_BUILD_TYPE;
 
 /**
@@ -24,3 +25,9 @@ typedef enum _KE_BUILD_TYPE {
  */
 KE_BUILD_TYPE
 KeGetBuildType();
+
+/**
+ * Converts the build type into ANSI string presentation.
+ */
+const char *
+KeBuildTypeToString(KE_BUILD_TYPE type);

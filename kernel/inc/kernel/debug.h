@@ -29,7 +29,7 @@ typedef struct _KE_DEBUG_INFO
 /**
  * Initializes KE_DEBUG_INFO, but with built-in filename and line.
  */
-#define KE_DEBUG_INFO_STANDARD(Message) {Message, __FILE__, __LINE__}
+#define KE_DEBUG_INFO_STANDARD(message) {message, __FILE__, __LINE__}
 
 /**
  * Checks if the condition is true.
@@ -39,4 +39,4 @@ typedef struct _KE_DEBUG_INFO
  * KeDebugAssert will only work if build type is set to debug.
  */
 void
-KeDebugAssert(IN BOOL condition, IN OPTIONAL KE_DEBUG_INFO *Info);
+KeDebugAssert(IN BOOL condition, IN OPTIONAL KE_DEBUG_INFO *info);
