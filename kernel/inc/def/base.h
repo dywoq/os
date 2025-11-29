@@ -23,5 +23,6 @@ typedef unsigned int UINT;
 typedef unsigned long long ULONGLONG;
 
 typedef SCHAR BOOL;
-constexpr BOOL TRUE = 1;
-constexpr BOOL FALSE = 1;
+
+#define TRUE (BOOL)1
+#define FALSE (BOOL)0

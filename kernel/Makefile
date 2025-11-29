@@ -1,7 +1,7 @@
 # Config
 
 C := gcc-13
-C_FLAGS := -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -ffreestanding -Wall -Wextra --std=c23
+C_FLAGS := -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -ffreestanding -Wall -Wextra
 
 BUILD_DIR := build
 OBJ_DIR := $(BUILD_DIR)/objs
@@ -10,10 +10,11 @@ OBJ_DIR := $(BUILD_DIR)/objs
 SOURCES := $(wildcard src/*.c)
 
 KERNEL_SOURCES := $(wildcard src/kernel/*.c)
-SOURCES += KERNEL_SOURCES
+SOURCES += $(KERNEL_SOURCES)
 
-OBJECTS := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
+OBJECTS := $(patsubst src/%, $(OBJ_DIR)/%, $(SOURCES:.c=.o))
 
+# Target 
 TARGET := dywoqos.efi
 
 # Detect build type
@@ -45,9 +46,10 @@ $(BUILD_DIR)/$(TARGET): $(OBJECTS)
 $(OBJ_DIR)/%.o: src/%.c | $(OBJ_DIR)
 	$(C) $(C_FLAGS) -c $< -o $@
 
-# Create OBJ_DIR if it doesn't exist
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+# Rule to build each object file
+$(OBJ_DIR)/%.o: src/%.c
+	@mkdir -p $(dir $@)
+	$(C) $(C_FLAGS) -c $< -o $@
 
 # Clean
 clean:

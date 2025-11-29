@@ -9,7 +9,7 @@ KeDebugAssert(IN BOOL condition, IN OPTIONAL KE_DEBUG_INFO *Info)
         return;
     }
 
-    if (Info == nullptr)
+    if (Info == 0)
     {
         // do nothing until we have way to free resources and terminating OS
         return;
