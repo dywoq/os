@@ -6,7 +6,12 @@ C_FLAGS := -fno-stack-protector -fpic -fshort-wchar -mno-red-zone -ffreestanding
 BUILD_DIR := build
 OBJ_DIR := $(BUILD_DIR)/objs
 
+# Sources
 SOURCES := $(wildcard src/*.c)
+
+KERNEL_SOURCES := $(wildcard src/kernel/*.c)
+SOURCES += KERNEL_SOURCES
+
 OBJECTS := $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SOURCES))
 
 TARGET := dywoqos.efi

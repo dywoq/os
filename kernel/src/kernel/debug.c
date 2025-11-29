@@ -1,5 +1,5 @@
-#include "../inc/kernel/debug.h"
-#include "../inc/kernel/build.h"
+#include "../../inc/kernel/build.h"
+#include "../../inc/kernel/debug.h"
 
 void
 KeDebugAssert(IN BOOL condition, IN OPTIONAL KE_DEBUG_INFO *Info)
@@ -15,6 +15,9 @@ KeDebugAssert(IN BOOL condition, IN OPTIONAL KE_DEBUG_INFO *Info)
         return;
     }
 
-    // see comment higher
-    return;
+    if (!condition)
+    {
+        // see comment higher
+        return;
+    }
 }

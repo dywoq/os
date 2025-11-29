@@ -1,14 +1,9 @@
 /**
  * A OS entry.
  *
- * WARNING: DO NOT CHANGE THE FUNCTION NAME,
- * IT IS HARDCODED INTO LINKER SCRIPT
+ * WARNING: Do not change the function name, it's hardcoded into linker script.
  */
 void
 KeEntry()
 {
-    while (1)
-    {
-        asm volatile("hlt");
-    }
 }
