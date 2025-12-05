@@ -1,3 +1,0 @@
-CompileFlags:
-	Add: [-DBUILD_DEBUG=1, -DBUILD_RELEASE=0, -xc, --std=c23]
-	Remove: [-xc++]
