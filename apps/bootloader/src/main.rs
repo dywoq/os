@@ -10,8 +10,7 @@ use uefi::boot::get_handle_for_protocol;
 use uefi::entry;
 use uefi::helpers;
 use uefi::proto::console::gop::GraphicsOutput;
-use uefi::proto::console::gop::PixelFormat;
-use uefi::{println, runtime};
+use uefi::runtime;
 
 #[entry]
 fn main() -> Status {
