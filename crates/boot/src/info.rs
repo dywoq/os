@@ -66,7 +66,7 @@ pub enum PixelFormat {
 }
 
 /// Represents the pixels displayed on the screen.
-pub struct Framebuffer<'a>(&'a mut [u8], usize, usize, PixelFormat);
+pub struct Framebuffer<'a>(&'a mut [u8], usize, usize, PixelFormat, usize);
 
 impl<'a> Framebuffer<'a> {
     pub fn from_uefi(gop: &mut GraphicsOutput) -> Framebuffer<'_> {
@@ -88,7 +88,10 @@ impl<'a> Framebuffer<'a> {
         let ptr_size = gop.frame_buffer().size();
         let slice = unsafe { slice::from_raw_parts_mut(ptr, ptr_size) };
 
-        Framebuffer(slice, width, height, pixel_format)
+        // Finally, get the number of pixels per scanline
+        let stride = info.stride();
+
+        Framebuffer(slice, width, height, pixel_format, stride)
     }
 
     pub fn buffer(&self) -> &[u8] {
@@ -109,6 +112,10 @@ impl<'a> Framebuffer<'a> {
 
     pub fn pixel_format(&self) -> PixelFormat {
         self.3
+    }
+
+    pub fn stride(&self) -> usize {
+        self.4
     }
 }
 
