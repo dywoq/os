@@ -1,4 +1,9 @@
-use uefi::runtime::Time;
+use core::slice;
+
+use uefi::{
+    proto::console::{self, gop::GraphicsOutput},
+    runtime::Time,
+};
 
 /// A snapshot of time received from the bootloader and
 /// given to the kernel.
@@ -51,7 +56,64 @@ impl SnapshotTime {
     }
 }
 
+/// The format of the pixels in a framebuffer.
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum PixelFormat {
+    Rgb = 0,
+    Bgr,
+    BitMask,
+    BitOnly,
+}
+
+/// Represents the pixels displayed on the screen.
+pub struct Framebuffer<'a>(&'a mut [u8], usize, usize, PixelFormat);
+
+impl<'a> Framebuffer<'a> {
+    pub fn from_uefi(gop: &mut GraphicsOutput) -> Framebuffer<'_> {
+        let info = gop.current_mode_info();
+
+        // Decide the pixel format
+        let pixel_format = match info.pixel_format() {
+            console::gop::PixelFormat::Rgb => PixelFormat::Rgb,
+            console::gop::PixelFormat::Bgr => PixelFormat::Bgr,
+            console::gop::PixelFormat::Bitmask => PixelFormat::BitMask,
+            console::gop::PixelFormat::BltOnly => PixelFormat::BitOnly,
+        };
+
+        // Get resolution
+        let (width, height) = info.resolution();
+
+        // Translate the framebuffer address into a slice for safe Rust operation
+        let ptr = gop.frame_buffer().as_mut_ptr();
+        let ptr_size = gop.frame_buffer().size();
+        let slice = unsafe { slice::from_raw_parts_mut(ptr, ptr_size) };
+
+        Framebuffer(slice, width, height, pixel_format)
+    }
+
+    pub fn buffer(&self) -> &[u8] {
+        self.0
+    }
+
+    pub fn buffer_mut(&mut self) -> &mut [u8] {
+        self.0
+    }
+
+    pub fn width(&self) -> usize {
+        self.1
+    }
+
+    pub fn height(&self) -> usize {
+        self.2
+    }
+
+    pub fn pixel_format(&self) -> PixelFormat {
+        self.3
+    }
+}
+
 /// All information received from the bootloader.
-pub struct Info {
+pub struct Info<'a> {
     pub snapshot_time: SnapshotTime,
+    pub framebuffer: Framebuffer<'a>,
 }
