@@ -50,3 +50,8 @@ impl SnapshotTime {
         self.7
     }
 }
+
+/// All information received from the bootloader.
+pub struct Info {
+    pub snapshot_time: SnapshotTime,
+}

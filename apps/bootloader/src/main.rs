@@ -3,15 +3,25 @@
 
 pub(crate) mod panic;
 
-use core::time::Duration;
-use uefi::{prelude::*, println};
+use ::boot::info;
+use uefi::Status;
+use uefi::boot;
+use uefi::entry;
+use uefi::helpers;
+use uefi::{println, runtime};
 
 #[entry]
 fn main() -> Status {
-    uefi::helpers::init().unwrap();
-    println!("Hi!");
-	boot::stall(Duration::from_secs(11));
-	panic!("error occurred");
-    // boot::stall(Duration::from_secs(10));
+    helpers::init().expect("Failed to initialize helpers");
+
+    // Collect time
+    let time = runtime::get_time().expect("Failed to get the time from bootloader");
+    let snapshot_time = info::SnapshotTime::from_uefi(time);
+
+    // Put everything inside Info instance
+    let info = info::Info {
+        snapshot_time: snapshot_time,
+    };
+
     Status::SUCCESS
 }
