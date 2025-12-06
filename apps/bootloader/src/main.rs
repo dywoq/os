@@ -7,15 +7,16 @@ use core::ffi::c_void;
 use core::ptr::null;
 
 use ::boot::info;
-use uefi::Status;
-use uefi::boot;
-use uefi::boot::get_handle_for_protocol;
-use uefi::entry;
-use uefi::helpers;
-use uefi::proto::console::gop::GraphicsOutput;
-use uefi::runtime;
-use uefi::system;
-use uefi::table::cfg::ConfigTableEntry;
+use uefi::{
+	Status,
+	boot::{self, get_handle_for_protocol},
+	entry,
+	helpers,
+	proto::console::gop::GraphicsOutput,
+	runtime,
+	system,
+	table::cfg::ConfigTableEntry,
+};
 
 #[entry]
 fn main() -> Status {
