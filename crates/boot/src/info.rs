@@ -1,8 +1,9 @@
-use core::slice;
+use core::{ffi::c_void, slice};
 
 use uefi::{
     proto::console::{self, gop::GraphicsOutput},
     runtime::Time,
+    table::cfg::ConfigTableEntry,
 };
 
 /// A snapshot of time received from the bootloader and
@@ -119,8 +120,21 @@ impl<'a> Framebuffer<'a> {
     }
 }
 
+/// Represents the address of the ACPI table provided by the bootloader.
+/// Used to access ACPI information in the kernel.
+pub struct Acpi {
+    pub address: *const c_void,
+}
+
+impl Acpi {
+    pub fn from_uefi(address: *const c_void) -> Acpi {
+        Acpi { address }
+    }
+}
+
 /// All information received from the bootloader.
 pub struct Info<'a> {
     pub snapshot_time: SnapshotTime,
     pub framebuffer: Framebuffer<'a>,
+    pub acpi: Acpi,
 }
