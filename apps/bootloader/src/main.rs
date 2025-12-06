@@ -60,8 +60,7 @@ fn main() -> Status {
     let buffer_ptr = boot::allocate_pool(MemoryType::LOADER_DATA, buffer_size)
         .expect("Failed to allocate memory map buffer");
     let buffer: *mut MemoryEntry = buffer_ptr.as_ptr() as *mut MemoryEntry;
-
-    let map = unsafe { boot::exit_boot_services(Some(MemoryType::LOADER_DATA)) };
+	
     let memory_map = unsafe { info::MMemoryMap::from_uefi(&memory_map_owned, buffer) };
 
     // Put everything inside Info instance
