@@ -1,9 +1,10 @@
 use core::{ffi::c_void, slice};
 
 use uefi::{
+    boot,
+    mem::{self, memory_map::MemoryMap},
     proto::console::{self, gop::GraphicsOutput},
     runtime::Time,
-    table::cfg::ConfigTableEntry,
 };
 
 /// A snapshot of time received from the bootloader and
@@ -132,9 +133,116 @@ impl Acpi {
     }
 }
 
+pub enum MemoryType {
+    Reserved = 0,
+    LoaderCode = 1,
+    LoaderData = 2,
+    BootServicesCode = 3,
+    BootServicesData = 4,
+    Conventional = 7,
+    Unusable = 8,
+    AcpiReclaim = 9,
+    AcpiNonVolatile = 10,
+    Mmio = 11,
+    MmioPortSpace = 12,
+    PalCode = 13,
+    PersistentMemory = 14,
+    Unaccepted = 15,
+    Max = 16,
+}
+
+impl MemoryType {
+    /// Converts the `uefi::boot::MemoryType`
+    /// into `boot::info::MemoryType`.
+    ///
+    /// This is the UEFI version of this function.
+    pub fn from_uefi(mt: boot::MemoryType) -> MemoryType {
+        match mt.0 {
+            0 => MemoryType::Reserved,
+            1 => MemoryType::LoaderCode,
+            2 => MemoryType::LoaderData,
+            3 => MemoryType::BootServicesCode,
+            4 => MemoryType::BootServicesData,
+            7 => MemoryType::Conventional,
+            8 => MemoryType::Unusable,
+            9 => MemoryType::AcpiReclaim,
+            10 => MemoryType::AcpiNonVolatile,
+            11 => MemoryType::Mmio,
+            12 => MemoryType::MmioPortSpace,
+            13 => MemoryType::PalCode,
+            14 => MemoryType::PersistentMemory,
+            15 => MemoryType::Unaccepted,
+            16 => MemoryType::Max,
+            _ => MemoryType::Reserved,
+        }
+    }
+}
+
+pub struct MemoryEntry {
+    pub memory_type: MemoryType,
+    pub phys_start: u64,
+    pub virt_start: u64,
+    pub page_count: u64,
+}
+
+impl MemoryEntry {
+    /// Copies the `uefi::boot::MemoryDescriptor` fields
+    /// and stores it in MemoryEntry.
+    ///
+    /// This is the UEFI version of this function .
+    pub fn from_uefi(descriptor: &boot::MemoryDescriptor) -> MemoryEntry {
+        MemoryEntry {
+            memory_type: MemoryType::from_uefi(descriptor.ty),
+            phys_start: descriptor.phys_start,
+            virt_start: descriptor.virt_start,
+            page_count: descriptor.page_count,
+        }
+    }
+}
+
+pub struct MMemoryMap {
+    pub entries: *const MemoryEntry,
+    pub entry_count: usize,
+}
+
+impl MMemoryMap {
+    /// Creates a MMemoryMap from UEFI memory map.
+    /// The entries buffer must be pre-allocated with sufficient size.
+    ///
+    /// # Safety
+    /// The caller must ensure that `entries_buffer` has enough space
+    /// to hold all memory map entries.
+    pub unsafe fn from_uefi(
+        _map: &mem::memory_map::MemoryMapOwned,
+        entries_buffer: *mut MemoryEntry,
+    ) -> MMemoryMap {
+        let mut index = 0;
+        for entry in _map.entries() {
+            // Write to the buffer
+            unsafe {
+                entries_buffer
+                    .add(index)
+                    .write(MemoryEntry::from_uefi(entry))
+            };
+            index += 1;
+        }
+
+        MMemoryMap {
+            entries: entries_buffer,
+            entry_count: index,
+        }
+    }
+
+    /// Get the entries as a slice
+    pub fn entries(&self) -> &[MemoryEntry] {
+        unsafe { slice::from_raw_parts(self.entries, self.entry_count) }
+    }
+}
+
 /// All information received from the bootloader.
 pub struct Info<'a> {
     pub snapshot_time: SnapshotTime,
     pub framebuffer: Framebuffer<'a>,
     pub acpi: Acpi,
+    pub memory_map: MMemoryMap,
 }
