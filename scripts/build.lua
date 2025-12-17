@@ -1,3 +1,0 @@
-local executing = require("./executing")
-executing.maybe_exit("cd", "../")
-executing.maybe_exit("cargo", "build --target x86_64-unknown-uefi")
