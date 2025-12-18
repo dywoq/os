@@ -5,6 +5,8 @@ use core::panic::PanicInfo;
 
 use uefi::{Status, entry, helpers, println};
 
+pub(crate) mod info;
+
 /// Custom panic handler.
 ///
 /// If you get LSP error about duplicate `panic_impl` implementation,
