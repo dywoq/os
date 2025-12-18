@@ -3,7 +3,7 @@ use core::{ffi, ptr};
 use uefi::{
     proto::console::gop::GraphicsOutput,
     runtime, system,
-    table::{self, cfg},
+    table::cfg,
 };
 
 pub fn get_snapshot_time() -> boot::time::SnapshotTime {
