@@ -12,4 +12,3 @@ pub struct Info {
     pub acpi: acpi::Acpi,
     pub snapshot_time: time::SnapshotTime,
 }
-

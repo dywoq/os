@@ -21,13 +21,17 @@ fn init_info() -> boot::Info {
     let snapshot_time = info::get_snapshot_time();
     let framebuffer = info::get_framebuffer();
     let acpi = info::get_acpi();
-    boot::Info { framebuffer: framebuffer, acpi: acpi, snapshot_time: snapshot_time }
+    boot::Info {
+        framebuffer: framebuffer,
+        acpi: acpi,
+        snapshot_time: snapshot_time,
+    }
 }
 
 #[entry()]
 fn main() -> Status {
     helpers::init().unwrap();
-    
+
     let info = init_info();
 
     println!("Hello, world!");
