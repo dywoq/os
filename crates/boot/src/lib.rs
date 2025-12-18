@@ -8,8 +8,8 @@ pub mod time;
 /// Boot loader information.
 #[repr(C)]
 pub struct Info {
-    framebuffer: graphics::FrameBuffer,
-    acpi: acpi::Acpi,
-    snapshot_time: time::SnapshotTime,
+    pub framebuffer: graphics::FrameBuffer,
+    pub acpi: acpi::Acpi,
+    pub snapshot_time: time::SnapshotTime,
 }
 
