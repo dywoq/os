@@ -2,4 +2,3 @@
 #![no_main]
 
 pub mod time;
-
