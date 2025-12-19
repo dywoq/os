@@ -1,10 +1,6 @@
 use core::{ffi, ptr};
 
-use uefi::{
-    proto::console::gop::GraphicsOutput,
-    runtime, system,
-    table::cfg,
-};
+use uefi::{proto::console::gop::GraphicsOutput, runtime, system, table::cfg};
 
 pub fn get_snapshot_time() -> boot::time::SnapshotTime {
     let time = runtime::get_time().unwrap();

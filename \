@@ -5,8 +5,8 @@ use core::panic::PanicInfo;
 
 use uefi::{Status, entry, helpers, println};
 
-pub(crate) mod filesystem;
 pub(crate) mod info;
+pub(crate) mod image;
 
 /// Custom panic handler.
 ///
